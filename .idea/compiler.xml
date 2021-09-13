@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="brinkman-cop3330-ex05" />
         <module name="brinkman-cop3330-ex12" />
+        <module name="brinkman-cop3330-ex05" />
         <module name="brinkman-cop3330-ex17" />
+        <module name="brinkman-cop3330-ex20" />
       </profile>
     </annotationProcessing>
   </component>

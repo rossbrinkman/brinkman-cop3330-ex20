@@ -1,5 +1,7 @@
 package org.example;
 import java.text.DecimalFormat;
+import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 /*
@@ -11,47 +13,55 @@ public class App
 {
     public static void main( String[] args )
     {
-        DecimalFormat f = new DecimalFormat("#0.00####");
+        DecimalFormat f = new DecimalFormat("#0.00");
         Scanner scanner = new Scanner(System.in);
-        int maleOrFemale;
-        float ouncesAlcohol, weight, hoursSinceLastDrink, alcoholDistributionRatio, bloodAlcoholContent;
-        String currentInput;
+        float orderAmount, taxRate = 0, totalTax, total;
+        String state, county;
 
-        System.out.println( "Enter a 1 if you are male or a 2 if you are female: " );
-        currentInput = scanner.nextLine();
-        try{
-            maleOrFemale = Integer.parseInt(currentInput);}
-        catch (NumberFormatException nfe){
-            System.out.println( "Input must be numeric" );
-            return;
+        System.out.println( "What is the order amount? " );
+
+        while (true) {
+            try {
+                orderAmount = scanner.nextFloat();
+                break;
+            } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Must be a number: ");
+                scanner.next();
+            }
         }
 
-        if(maleOrFemale == 1)
-            alcoholDistributionRatio = 0.73f;
-        else if (maleOrFemale == 2)
-            alcoholDistributionRatio = 0.66f;
-        else
+        System.out.println( "What State do you live in? " );
+        scanner.next();
+        state = scanner.nextLine();
+        state = state.toUpperCase();
+
+        switch(state)
         {
-            System.out.println( "Invalid Input" );
-            return;
+            case "WISCONSIN":
+                taxRate = .05f;
+                System.out.println( "What County do you live in? " );
+                county = scanner.nextLine();
+                county = county.toUpperCase();
+                switch (county){
+                    case "Eau Claire":
+                        taxRate += .005f;
+                        break;
+                    case "Dunn":
+                        taxRate += .004f;
+                        break;
+                }
+            case "ILLINOIS":
+                taxRate = .08f;
+                break;
+            default:
+                System.out.println(" sdfgsgfdh" );
+                break;
         }
 
-        System.out.println( "How many ounces of alcohol did you have? " );
-        ouncesAlcohol = scanner.nextFloat();
-
-        System.out.println( "What is your weight in pounds? " );
-        weight = scanner.nextFloat();
-
-        System.out.println( "How many hours has it been since your last drink? " );
-        hoursSinceLastDrink = scanner.nextFloat();
-
-        bloodAlcoholContent = (ouncesAlcohol * 5.14f / weight * alcoholDistributionRatio) - .015f * hoursSinceLastDrink;
-
-        System.out.println( "Your BAC is " + f.format(bloodAlcoholContent));
-
-        String endString = bloodAlcoholContent >= .08f ? "It is not legal for you to drive" : "It is legal for you to drive";
-
-        System.out.println(endString);
+        totalTax = taxRate * orderAmount;
+        total = orderAmount + totalTax;
+        System.out.println( "The tax is $" + f.format(totalTax) + "\n" +
+                "The total is $" + f.format(total));
 
         scanner.close();
     }
