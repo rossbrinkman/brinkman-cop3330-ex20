@@ -1,7 +1,6 @@
 package org.example;
 import java.text.DecimalFormat;
 import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
 
 /*
@@ -30,31 +29,34 @@ public class App
             }
         }
 
-        System.out.println( "What State do you live in? " );
-        scanner.next();
-        state = scanner.nextLine();
+        System.out.println( "What state do you live in? " );
+        state = scanner.next();
         state = state.toUpperCase();
 
         switch(state)
         {
             case "WISCONSIN":
                 taxRate = .05f;
-                System.out.println( "What County do you live in? " );
+                scanner.nextLine();
+                System.out.println( "What county do you live in? " );
                 county = scanner.nextLine();
                 county = county.toUpperCase();
-                switch (county){
-                    case "Eau Claire":
+                switch (county)
+                {
+                    case "EAU CLAIRE":
                         taxRate += .005f;
                         break;
-                    case "Dunn":
+                    case "DUNN":
                         taxRate += .004f;
                         break;
+                    default:
+                        break;
                 }
+                break;
             case "ILLINOIS":
                 taxRate = .08f;
                 break;
             default:
-                System.out.println(" sdfgsgfdh" );
                 break;
         }
 
